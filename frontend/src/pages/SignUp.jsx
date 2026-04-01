@@ -2,6 +2,7 @@ import { register } from "@/store/slices/userSlice";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { isValidEmail, isValidPassword, isValidPhone } from "@/utils/validation";
 
 const SignUp = () => {
   const [userName, setUserName] = useState("");
@@ -25,15 +26,23 @@ const SignUp = () => {
   const handleRegister = (e) => {
     e.preventDefault();
 
-    // Basic email validation
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
+    if (!isValidEmail(email)) {
       alert("Please enter a valid email address");
       return;
     }
 
+    if (!isValidPhone(phone)) {
+      alert("Phone number must be 10 digits");
+      return;
+    }
+
+    if (!isValidPassword(password)) {
+      alert("Password must be at least 6 characters");
+      return;
+    }
+
     // Basic validation for required fields
-    if (!userName || !phone || !password || !address || !role) {
+    if (!userName || !address || !role) {
       alert("Please fill in all required fields");
       return;
     }
@@ -48,7 +57,7 @@ const SignUp = () => {
         alert("Please provide your Razorpay account number");
         return;
       }
-      if (!paypalEmail || !emailRegex.test(paypalEmail)) {
+      if (!paypalEmail || !isValidEmail(paypalEmail)) {
         alert("Please provide a valid PayPal email address");
         return;
       }

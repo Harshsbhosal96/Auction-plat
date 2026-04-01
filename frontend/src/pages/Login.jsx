@@ -2,6 +2,7 @@ import { login } from "@/store/slices/userSlice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { isValidEmail, isValidPassword } from "@/utils/validation";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,15 +16,13 @@ const Login = () => {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Basic email validation
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    if (!emailRegex.test(email)) {
+    if (!isValidEmail(email)) {
       alert("Please enter a valid email address");
       return;
     }
 
-    if (!password) {
-      alert("Please enter your password");
+    if (!isValidPassword(password)) {
+      alert("Please enter a valid password (minimum 6 characters)");
       return;
     }
 

@@ -54,7 +54,6 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email address"
                 required
-                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 className="text-[16px] py-2 px-3 bg-transparent border-b-[1px] border-b-stone-500 focus:outline-none focus:border-b-[#d6482b] transition-colors duration-200"
               />
               <small className="text-stone-400 text-sm">Example: user@example.com</small>

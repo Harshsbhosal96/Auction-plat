@@ -80,6 +80,24 @@ const userSlice = createSlice({
       state.loading = false;
       state.leaderboard = [];
     },
+    forgotPasswordRequest(state, action) {
+      state.loading = true;
+    },
+    forgotPasswordSuccess(state, action) {
+      state.loading = false;
+    },
+    forgotPasswordFailed(state, action) {
+      state.loading = false;
+    },
+    resetPasswordRequest(state, action) {
+      state.loading = true;
+    },
+    resetPasswordSuccess(state, action) {
+      state.loading = false;
+    },
+    resetPasswordFailed(state, action) {
+      state.loading = false;
+    },
     clearAllErrors(state, action) {
       state.user = state.user;
       state.isAuthenticated = state.isAuthenticated;
@@ -129,6 +147,47 @@ export const login = (data) => async (dispatch) => {
   } catch (error) {
     dispatch(userSlice.actions.loginFailed());
     const errorMsg = error.response?.data?.message || "Login failed. Please try again.";
+    toast.error(errorMsg);
+    dispatch(userSlice.actions.clearAllErrors());
+  }
+};
+
+export const sendForgotPasswordEmail = (data) => async (dispatch) => {
+  dispatch(userSlice.actions.forgotPasswordRequest());
+  try {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const response = await axios.post(
+      `${API_BASE_URL}/api/v1/user/password/forgot`,
+      data,
+      { withCredentials: true }
+    );
+    dispatch(userSlice.actions.forgotPasswordSuccess());
+    toast.success(response.data.message);
+    dispatch(userSlice.actions.clearAllErrors());
+  } catch (error) {
+    dispatch(userSlice.actions.forgotPasswordFailed());
+    const errorMsg = error.response?.data?.message || "Failed to send forgot password email.";
+    toast.error(errorMsg);
+    dispatch(userSlice.actions.clearAllErrors());
+  }
+};
+
+export const resetPassword = (data) => async (dispatch) => {
+  dispatch(userSlice.actions.resetPasswordRequest());
+  try {
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const response = await axios.put(
+      `${API_BASE_URL}/api/v1/user/password/reset/${data.token}`,
+      { password: data.password, confirmPassword: data.confirmPassword },
+      { withCredentials: true }
+    );
+    dispatch(userSlice.actions.resetPasswordSuccess());
+    toast.success(response.data.message);
+    dispatch(userSlice.actions.loginSuccess(response.data));
+    dispatch(userSlice.actions.clearAllErrors());
+  } catch (error) {
+    dispatch(userSlice.actions.resetPasswordFailed());
+    const errorMsg = error.response?.data?.message || "Failed to reset password.";
     toast.error(errorMsg);
     dispatch(userSlice.actions.clearAllErrors());
   }

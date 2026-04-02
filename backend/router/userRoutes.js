@@ -5,6 +5,8 @@ import {
   login,
   logout,
   register,
+  forgotPassword,
+  resetPassword,
 } from "../controllers/userController.js";
 import { isAuthenticated } from "../middlewares/auth.js";
 
@@ -12,6 +14,8 @@ const router = express.Router();
 
 router.post("/register", register);
 router.post("/login", login);
+router.post("/password/forgot", forgotPassword);
+router.put("/password/reset/:token", resetPassword);
 router.get("/me", isAuthenticated, getProfile);
 router.get("/logout", isAuthenticated, logout);
 router.get("/leaderboard", fetchLeaderboard);

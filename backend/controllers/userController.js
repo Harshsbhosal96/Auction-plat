@@ -3,6 +3,8 @@ import ErrorHandler from "../middlewares/error.js";
 import { User } from "../models/userSchema.js";
 import { v2 as cloudinary } from "cloudinary";
 import { generateToken } from "../utils/jwtToken.js";
+import { sendEmail } from "../utils/sendEmail.js";
+import crypto from "crypto";
 
 export const register = catchAsyncErrors(async (req, res, next) => {
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -109,6 +111,72 @@ export const login = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHandler("Invalid credentials.", 400));
   }
   generateToken(user, "Login successfully.", 200, res);
+});
+
+export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
+  const { email } = req.body;
+  if (!email) {
+    return next(new ErrorHandler("Please provide an email address.", 400));
+  }
+  const user = await User.findOne({ email });
+  if (!user) {
+    return next(new ErrorHandler("No user found with this email.", 404));
+  }
+
+  const resetToken = user.getResetPasswordToken();
+  await user.save({ validateBeforeSave: false });
+
+  const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
+  const message = `You requested a password reset.\n\nPlease click this link (or copy/paste in browser) to reset your password:\n\n${resetUrl}\n\nIf you did not request this email, please ignore it.`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: "Auction Platform Password Reset",
+      message,
+    });
+
+    res.status(200).json({
+      success: true,
+      message: `Email sent to ${user.email} with reset instructions.`,
+    });
+  } catch (error) {
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save({ validateBeforeSave: false });
+    return next(new ErrorHandler(error.message || "Email could not be sent.", 500));
+  }
+});
+
+export const resetPassword = catchAsyncErrors(async (req, res, next) => {
+  const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+
+  const user = await User.findOne({
+    resetPasswordToken,
+    resetPasswordExpire: { $gt: Date.now() },
+  }).select("+password");
+
+  if (!user) {
+    return next(new ErrorHandler("Invalid or expired reset token", 400));
+  }
+
+  const { password, confirmPassword } = req.body;
+  if (!password || !confirmPassword) {
+    return next(new ErrorHandler("Please enter and confirm the new password.", 400));
+  }
+  if (password !== confirmPassword) {
+    return next(new ErrorHandler("Passwords do not match.", 400));
+  }
+
+  user.password = password;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpire = undefined;
+  await user.save();
+
+  generateToken(user, "Password has been reset successfully.", 200, res);
 });
 
 export const getProfile = catchAsyncErrors(async (req, res, next) => {

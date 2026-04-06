@@ -18,11 +18,25 @@ config({
   path: "./.env",
 });
 
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  "https://leafy-valkyrie-ca4479.netlify.app",
+  "https://jovial-dragon-992f88.netlify.app",
+  "http://localhost:5173",
+];
+
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL, "https://leafy-valkyrie-ca4479.netlify.app", "https://jovial-dragon-992f88.netlify.app"],
-    methods: ["POST", "GET", "PUT", "DELETE"],
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin) || /\.netlify\.app$/.test(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("CORS policy: Origin not allowed"));
+    },
+    methods: ["POST", "GET", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
+    optionsSuccessStatus: 200,
   })
 );
 

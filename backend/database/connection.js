@@ -2,9 +2,7 @@ import mongoose from "mongoose";
 
 export const connection = () => {
   mongoose
-    .connect(process.env.MONGO_URI, {
-      dbName: "MERN_AUCTION_PLATFORM",
-    })
+    .connect(process.env.MONGO_URI)
     .then(() => {
       console.log("Connected to database.");
     })

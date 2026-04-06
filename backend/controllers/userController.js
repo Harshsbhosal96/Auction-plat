@@ -126,7 +126,7 @@ export const forgotPassword = catchAsyncErrors(async (req, res, next) => {
   const resetToken = user.getResetPasswordToken();
   await user.save({ validateBeforeSave: false });
 
-  const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${resetToken}`;
+  const resetUrl = `${process.env.FRONTEND_URL}/password/reset/${encodeURIComponent(resetToken)}`;
   const message = `You requested a password reset.\n\nPlease click this link (or copy/paste in browser) to reset your password:\n\n${resetUrl}\n\nIf you did not request this email, please ignore it.`;
 
   try {
@@ -192,7 +192,6 @@ export const logout = catchAsyncErrors(async (req, res, next) => {
     .status(200)
     .cookie("token", "", {
       expires: new Date(Date.now()),
-      httpOnly: true,
     })
     .json({
       success: true,

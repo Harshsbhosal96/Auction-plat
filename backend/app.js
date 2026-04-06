@@ -20,7 +20,7 @@ config({
 
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL, "https://leafy-valkyrie-ca4479.netlify.app"],
+    origin: [process.env.FRONTEND_URL, "https://leafy-valkyrie-ca4479.netlify.app", "https://jovial-dragon-992f88.netlify.app"],
     methods: ["POST", "GET", "PUT", "DELETE"],
     credentials: true,
   })

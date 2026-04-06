@@ -25,7 +25,7 @@ const bidSlice = createSlice({
 export const placeBid = (id, data) => async (dispatch) => {
   dispatch(bidSlice.actions.bidRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
     const response = await axios.post(
       `${API_BASE_URL}/api/v1/bid/place/${id}`,
       data,

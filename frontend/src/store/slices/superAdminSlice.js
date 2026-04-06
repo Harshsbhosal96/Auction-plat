@@ -108,7 +108,7 @@ const superAdminSlice = createSlice({
 export const getMonthlyRevenue = () => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForMonthlyRevenue());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://backend-auction-xnrf.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
     const response = await axios.get(
       `${API_BASE_URL}/api/v1/superadmin/monthlyincome`,
       { withCredentials: true }
@@ -127,7 +127,7 @@ export const getMonthlyRevenue = () => async (dispatch) => {
 export const getAllUsers = () => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForAllUsers());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://backend-auction-xnrf.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
     const response = await axios.get(
       `${API_BASE_URL}/api/v1/superadmin/users/getall`,
       { withCredentials: true }
@@ -142,7 +142,7 @@ export const getAllUsers = () => async (dispatch) => {
 export const getAllPaymentProofs = () => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForPaymentProofs());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://backend-auction-xnrf.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
     const response = await axios.get(
       `${API_BASE_URL}/api/v1/superadmin/paymentproofs/getall`,
       { withCredentials: true }
@@ -161,7 +161,7 @@ export const getAllPaymentProofs = () => async (dispatch) => {
 export const deletePaymentProof = (id) => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForDeletePaymentProof());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://backend-auction-xnrf.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
     const response = await axios.delete(
       `${API_BASE_URL}/api/v1/superadmin/paymentproof/delete/${id}`,
       { withCredentials: true }
@@ -179,7 +179,7 @@ export const deletePaymentProof = (id) => async (dispatch) => {
 export const getSinglePaymentProofDetail = (id) => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForSinglePaymentProofDetail());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://backend-auction-xnrf.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
     const response = await axios.get(
       `${API_BASE_URL}/api/v1/superadmin/paymentproof/${id}`,
       { withCredentials: true }
@@ -198,7 +198,7 @@ export const getSinglePaymentProofDetail = (id) => async (dispatch) => {
 export const updatePaymentProof = (id, status, amount) => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForUpdatePaymentProof());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://backend-auction-xnrf.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
     const response = await axios.put(
       `${API_BASE_URL}/api/v1/superadmin/paymentproof/status/update/${id}`,
       { status, amount },
@@ -218,7 +218,7 @@ export const updatePaymentProof = (id, status, amount) => async (dispatch) => {
 export const deleteAuctionItem = (id) => async (dispatch) => {
   dispatch(superAdminSlice.actions.requestForAuctionItemDelete());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://backend-auction-xnrf.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
     const response = await axios.delete(
       `${API_BASE_URL}/api/v1/superadmin/auctionitem/delete/${id}`,
       { withCredentials: true }

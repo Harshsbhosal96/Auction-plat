@@ -91,7 +91,7 @@ const auctionSlice = createSlice({
 export const getAllAuctionItems = () => async (dispatch) => {
   dispatch(auctionSlice.actions.getAllAuctionItemRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.get(
       `${API_BASE_URL}/api/v1/auctionitem/allitems`,
       { withCredentials: true }
@@ -110,7 +110,7 @@ export const getAllAuctionItems = () => async (dispatch) => {
 export const getMyAuctionItems = () => async (dispatch) => {
   dispatch(auctionSlice.actions.getMyAuctionsRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.get(
       `${API_BASE_URL}/api/v1/auctionitem/myitems`,
       { withCredentials: true }
@@ -127,7 +127,7 @@ export const getMyAuctionItems = () => async (dispatch) => {
 export const getAuctionDetail = (id) => async (dispatch) => {
   dispatch(auctionSlice.actions.getAuctionDetailRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.get(
       `${API_BASE_URL}/api/v1/auctionitem/auction/${id}`,
       { withCredentials: true }
@@ -144,7 +144,7 @@ export const getAuctionDetail = (id) => async (dispatch) => {
 export const createAuction = (data) => async (dispatch) => {
   dispatch(auctionSlice.actions.createAuctionRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.post(
       `${API_BASE_URL}/api/v1/auctionitem/create`,
       data,
@@ -167,7 +167,7 @@ export const createAuction = (data) => async (dispatch) => {
 export const republishAuction = (id, data) => async (dispatch) => {
   dispatch(auctionSlice.actions.republishItemRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.put(
       `${API_BASE_URL}/api/v1/auctionitem/item/republish/${id}`,
       data,
@@ -192,7 +192,7 @@ export const republishAuction = (id, data) => async (dispatch) => {
 export const deleteAuction = (id) => async (dispatch) => {
   dispatch(auctionSlice.actions.deleteAuctionItemRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.delete(
       `${API_BASE_URL}/api/v1/auctionitem/delete/${id}`,
       {

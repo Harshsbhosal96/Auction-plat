@@ -24,7 +24,7 @@ const commissionSlice = createSlice({
 export const postCommissionProof = (data) => async (dispatch) => {
   dispatch(commissionSlice.actions.postCommissionProofRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auction-plat-backende.onrender.com";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.post(
       `${API_BASE_URL}/api/v1/commission/proof`,
       data,

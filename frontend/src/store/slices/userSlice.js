@@ -74,7 +74,7 @@ const userSlice = createSlice({
     },
     fetchLeaderboardSuccess(state, action) {
       state.loading = false;
-      state.leaderboard = action.payload;
+      state.leaderboard = action.payload ?? [];
     },
     fetchLeaderboardFailed(state, action) {
       state.loading = false;
@@ -110,7 +110,7 @@ const userSlice = createSlice({
 export const register = (data) => async (dispatch) => {
   dispatch(userSlice.actions.registerRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.post(
       `${API_BASE_URL}/api/v1/user/register`,
       data,
@@ -132,7 +132,7 @@ export const register = (data) => async (dispatch) => {
 export const login = (data) => async (dispatch) => {
   dispatch(userSlice.actions.loginRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.post(
       `${API_BASE_URL}/api/v1/user/login`,
       data,
@@ -155,7 +155,7 @@ export const login = (data) => async (dispatch) => {
 export const sendForgotPasswordEmail = (data) => async (dispatch) => {
   dispatch(userSlice.actions.forgotPasswordRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.post(
       `${API_BASE_URL}/api/v1/user/password/forgot`,
       data,
@@ -175,7 +175,7 @@ export const sendForgotPasswordEmail = (data) => async (dispatch) => {
 export const resetPassword = (data) => async (dispatch) => {
   dispatch(userSlice.actions.resetPasswordRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.put(
       `${API_BASE_URL}/api/v1/user/password/reset/${data.token}`,
       { password: data.password, confirmPassword: data.confirmPassword },
@@ -195,7 +195,7 @@ export const resetPassword = (data) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.get(
       `${API_BASE_URL}/api/v1/user/logout`,
       { withCredentials: true }
@@ -213,7 +213,7 @@ export const logout = () => async (dispatch) => {
 export const fetchUser = () => async (dispatch) => {
   dispatch(userSlice.actions.fetchUserRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.get(
       `${API_BASE_URL}/api/v1/user/me`,
       {
@@ -232,7 +232,7 @@ export const fetchUser = () => async (dispatch) => {
 export const fetchLeaderboard = () => async (dispatch) => {
   dispatch(userSlice.actions.fetchLeaderboardRequest());
   try {
-    const API_BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    const API_BASE_URL = import.meta.env.VITE_API_URL || "https://auct-back.onrender.com";
     const response = await axios.get(
       `${API_BASE_URL}/api/v1/user/leaderboard`,
       {

@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Leaderboard = () => {
-  const { leaderboard } = useSelector((state) => state.user);
+  const leaderboard = useSelector((state) => state.user?.leaderboard ?? []);
   return (
     <>
       <section className="my-8 lg:px-5">

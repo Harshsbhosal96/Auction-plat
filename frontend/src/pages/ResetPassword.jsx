@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "@/store/slices/userSlice";
 
@@ -9,6 +9,14 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const { loading } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!token) {
+      alert("Invalid reset link. Please request a new password reset.");
+      navigate("/forgot-password");
+    }
+  }, [token, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -20,7 +28,9 @@ const ResetPassword = () => {
       alert("Passwords do not match");
       return;
     }
-    dispatch(resetPassword({ token, password, confirmPassword }));
+    // URL decode the token in case it was encoded
+    const decodedToken = decodeURIComponent(token);
+    dispatch(resetPassword({ token: decodedToken, password, confirmPassword }));
   };
 
   return (
